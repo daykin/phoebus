@@ -525,13 +525,14 @@ public class DisplayRuntimeInstance implements AppInstance
         navigation.dispose();
     }
 
+    public DisplayModel getActiveModel()
+    {
+        return active_model;
+    }
+
     public void addListener(ToolkitListener listener){
         this.getRepresentation().removeListener(listener);
         this.getRepresentation().addListener(listener);
-    }
-
-    public void removeListener(ToolkitListener listener){
-        this.getRepresentation().removeListener(listener);
     }
 
     @Override
