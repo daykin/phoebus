@@ -11,10 +11,13 @@ import static org.csstudio.display.builder.runtime.WidgetRuntime.logger;
 
 
 import java.awt.geom.Rectangle2D;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 
 import org.csstudio.display.builder.model.DisplayModel;
@@ -74,7 +77,7 @@ public class DisplayRuntimeInstance implements AppInstance
     private final BorderPane layout = new BorderPane();
     private final DockItemWithInput dock_item;
     private final DockItemRepresentation representation;
-    private FutureTask<Object> representation_init = new FutureTask<>(() -> {return null;});
+    private FutureTask<Void> representation_init = new FutureTask<>(() -> {return null;});
     private Node toolbar;
 
     /** Property on the 'model_parent' of the JFX scene that holds this DisplayRuntimeInstance */
@@ -157,9 +160,10 @@ public class DisplayRuntimeInstance implements AppInstance
                 representation.fireContextMenu(model, (int)event.getScreenX(), (int)event.getScreenY());
             }
         });
+
         layout.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeys);
+
         dock_item.addClosedNotification(this::onClosed);
-        representation_init.run();
     }
 
     @Override
@@ -186,9 +190,9 @@ public class DisplayRuntimeInstance implements AppInstance
     }
 
     /* Clients waiting for the representation to be initialized can get() this,
-    * which will block until the representation is initialized.
-    */
-    public FutureTask<Object> getRepresentation_init() {
+     * which will block until the representation is initialized.
+     */
+    public FutureTask<Void> getRepresentation_init() {
         return representation_init;
     }
 
@@ -313,6 +317,7 @@ public class DisplayRuntimeInstance implements AppInstance
                 RuntimeUtil.startRuntime(model);
 
                 logger.log(Level.FINE, "Waiting for representation of model " + info.getPath());
+
                 try
                 {
                     representation.awaitRepresentation(30, TimeUnit.SECONDS);
@@ -503,11 +508,6 @@ public class DisplayRuntimeInstance implements AppInstance
         representation.shutdown();
 
         navigation.dispose();
-    }
-
-    DisplayModel getActiveModel()
-    {
-        return active_model;
     }
 
     public void addListener(ToolkitListener listener){
