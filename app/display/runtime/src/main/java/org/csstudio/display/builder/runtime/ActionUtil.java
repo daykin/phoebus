@@ -31,6 +31,7 @@ import org.phoebus.framework.macros.MacroHandler;
 import org.phoebus.framework.macros.MacroOrSystemProvider;
 import org.phoebus.framework.macros.MacroValueProvider;
 import org.phoebus.framework.macros.Macros;
+import org.phoebus.ui.application.ResourceOpenedNotifierService;
 
 /** Action Helper
  *  @author Kay Kasemir
