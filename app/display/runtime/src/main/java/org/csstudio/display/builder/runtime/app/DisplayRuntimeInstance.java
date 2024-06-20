@@ -294,7 +294,9 @@ public class DisplayRuntimeInstance implements AppInstance
         // another instance
         dock_item.setInput(info.toURI());
 
-        representation.fireMethodCall((Object)display_info);
+        StackTraceElement[] applicationThreadStackTrace = Thread.currentThread().getStackTrace();
+
+        representation.fireMethodCall(info);
 
         // Now that old model is no longer represented,
         // show info.
