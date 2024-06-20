@@ -296,7 +296,6 @@ public class DisplayRuntimeInstance implements AppInstance
 
         StackTraceElement[] applicationThreadStackTrace = Thread.currentThread().getStackTrace();
 
-
         // Now that old model is no longer represented,
         // show info.
         // Showing this info before disposeModel()
