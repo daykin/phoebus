@@ -8,13 +8,10 @@
 package org.csstudio.display.builder.runtime.app;
 
 import java.net.URI;
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
 import org.csstudio.display.builder.model.DisplayModel;
-import org.csstudio.display.builder.model.Widget;
-import org.csstudio.display.builder.representation.ToolkitListener;
 import org.csstudio.display.builder.representation.ToolkitRepresentation;
 import org.csstudio.display.builder.representation.javafx.JFXRepresentation;
 import org.phoebus.framework.workbench.ApplicationService;

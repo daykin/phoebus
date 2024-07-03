@@ -10,9 +10,6 @@ package org.csstudio.display.builder.representation;
 import org.csstudio.display.builder.model.Widget;
 import org.csstudio.display.builder.model.properties.ActionInfo;
 
-import java.util.Optional;
-import java.util.concurrent.FutureTask;
-
 /** Listener to a widget representation
  *
  *  <p>Provides notification of events (action invoked, ..)
@@ -48,6 +45,11 @@ public interface ToolkitListener
      */
     default public void handleWrite(Widget widget, Object value) {};
 
+    /**
+     * A method was called from the UI that other listeners might be interested in.
+     * @param user_args Zero or more objects relevant to what was called.
+     *      Case-specific Implementations should expect and check these.
+     */
     default public void handleMethodCalled(Object... user_args) {};
 
 }
